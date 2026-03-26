@@ -1,8 +1,19 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion"; // Use for the 'next level' feel
+import { motion } from "framer-motion";
 import { FiCheckCircle, FiCode, FiCpu, FiUsers, FiArrowRight } from "react-icons/fi";
 
 export default function Home() {
+
+    useEffect(() => {
+        document.title = "PrepWise | Master Your Tech Interview with AI Insights";
+        
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute("content", "Master HR, Technical, and System Design rounds with PrepWise. Get data-driven insights and AI-powered feedback to land your dream software engineering job.");
+        }
+    }, []);
+
     return (
         <div className="relative overflow-hidden bg-white">
             {/* Background Decorative Blobs */}
@@ -11,7 +22,7 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
                 {/* --- Hero Section --- */}
-                <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <section className="relative pt-8 pb-10 lg:pt-16 lg:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -24,7 +35,7 @@ export default function Home() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
                             </span>
-                            Interview Preparation 2.0
+                            Interview Preparation
                         </div>
 
                         <h1 className="text-5xl lg:text-7xl font-black text-gray-900 leading-[1.1] tracking-tight">
@@ -37,26 +48,17 @@ export default function Home() {
 
                         <div className="mt-10 flex flex-col sm:flex-row gap-4">
                             <Link
-                                to="/signup"
-                                className="group px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 shadow-xl shadow-indigo-200 transition-all flex items-center justify-center gap-2"
+                                to="/dashboard"
+                                className="group px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 shadow-xl shadow-indigo-200 transition-all flex items-center justify-center gap-2 w-max"
                             >
-                                Get Started Free
+                                Start Preparing Now
                                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                            <Link
-                                to="/login"
-                                className="px-8 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-2xl hover:bg-gray-50 transition-all text-center"
-                            >
-                                View Demo
                             </Link>
                         </div>
 
                         {/* Trust Badges */}
                         <div className="mt-12 flex items-center gap-6 text-gray-400">
                             <p className="text-xs font-bold uppercase tracking-widest">Trusted by students from</p>
-                            <div className="flex gap-4 grayscale opacity-70 font-black italic">
-                                <span>FAANG</span> <span>FORTUNE 500</span>
-                            </div>
                         </div>
                     </motion.div>
 
@@ -67,39 +69,39 @@ export default function Home() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="relative"
                     >
-                        <div className="relative z-10 bg-white rounded-[2.5rem] p-8 shadow-2xl border border-gray-100 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
-                            <div className="flex items-center justify-between mb-8">
-                                <h3 className="font-bold text-gray-900">Performance Overview</h3>
-                                <div className="flex gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                                    <div className="w-3 h-3 rounded-full bg-amber-400" />
-                                    <div className="w-3 h-3 rounded-full bg-emerald-400" />
-                                </div>
+                        <div className="relative z-10 bg-[#0d1117] rounded-[2.5rem] p-8 shadow-2xl border border-gray-800 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
+                            {/* Window dots */}
+                            <div className="flex gap-2 mb-6">
+                                <div className="w-3 h-3 rounded-full bg-red-500 border border-red-600" />
+                                <div className="w-3 h-3 rounded-full bg-amber-500 border border-amber-600" />
+                                <div className="w-3 h-3 rounded-full bg-emerald-500 border border-emerald-600" />
                             </div>
-
-                            <div className="space-y-6">
-                                <StatsBar label="Technical Proficiency" progress="85%" color="bg-indigo-600" />
-                                <StatsBar label="Communication Score" progress="72%" color="bg-emerald-500" />
-                                <StatsBar label="DSA Accuracy" progress="64%" color="bg-amber-500" />
+                            
+                            {/* Code editor look */}
+                            <div className="font-mono text-[13px] sm:text-sm text-gray-300 space-y-1.5 leading-relaxed tracking-wide">
+                                <p><span className="text-pink-400">function</span> <span className="text-blue-400">twoSum</span>(nums, target) {'{'}</p>
+                                <p className="pl-4"><span className="text-pink-400">const</span> map = <span className="text-pink-400">new</span> Map();</p>
+                                <p className="pl-4"><span className="text-pink-400">for</span> (<span className="text-pink-400">let</span> i = 0; i &lt; nums.length; i++) {'{'}</p>
+                                <p className="pl-8"><span className="text-pink-400">const</span> comp = target - nums[i];</p>
+                                <p className="pl-8"><span className="text-pink-400">if</span> (map.has(comp)) {'{'}</p>
+                                <p className="pl-12 text-green-300"><span className="text-pink-400">return</span> [map.get(comp), i];</p>
+                                <p className="pl-8">{'}'}</p>
+                                <p className="pl-8">map.set(nums[i], i);</p>
+                                <p className="pl-4">{'}'}</p>
+                                <p>{'}'}</p>
                             </div>
-
-                            <div className="mt-8 pt-8 border-t grid grid-cols-3 gap-4">
-                                <div className="text-center">
-                                    <p className="text-2xl font-black text-indigo-600">124</p>
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase">Solved</p>
+                            
+                            {/* Run Result Bottom Bar */}
+                            <div className="mt-8 pt-5 border-t border-gray-800 flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+                                    <FiCheckCircle />
+                                    <span>Accepted</span>
                                 </div>
-                                <div className="text-center border-x">
-                                    <p className="text-2xl font-black text-gray-900">12</p>
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase">Mock Exams</p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-2xl font-black text-emerald-600">92%</p>
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase">Percentile</p>
-                                </div>
+                                <span className="text-xs text-gray-500 font-mono">Runtime: 58 ms</span>
                             </div>
                         </div>
                         {/* Floating Decoration */}
-                        <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-indigo-600 rounded-3xl -z-10 blur-2xl opacity-20 animate-pulse" />
+                        <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-500 rounded-full -z-10 blur-[3xl] opacity-20 animate-pulse" />
                     </motion.div>
                 </section>
 
@@ -142,10 +144,10 @@ export default function Home() {
                                 Don't leave your career to chance.
                             </h2>
                             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-                                Join 10,000+ developers practicing on PrepWise every day.
+                                Join thousands of engineers stepping up their game.
                             </p>
                             <Link
-                                to="/signup"
+                                to="/dashboard"
                                 className="inline-block bg-white text-gray-900 px-10 py-4 rounded-2xl font-black hover:bg-indigo-50 hover:scale-105 transition-all shadow-xl"
                             >
                                 Start Preparing Now
@@ -153,25 +155,6 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-            </div>
-        </div>
-    );
-}
-
-function StatsBar({ label, progress, color }) {
-    return (
-        <div>
-            <div className="flex justify-between mb-2">
-                <span className="text-xs font-bold text-gray-700">{label}</span>
-                <span className="text-xs font-bold text-gray-500">{progress}</span>
-            </div>
-            <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: progress }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className={`h-full ${color}`}
-                />
             </div>
         </div>
     );

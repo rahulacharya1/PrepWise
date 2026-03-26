@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiUsers, FiMessageCircle, FiInfo, FiChevronDown, FiStar } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { FiUsers, FiMessageCircle, FiInfo, FiChevronDown, FiStar, FiArrowLeft } from "react-icons/fi";
 import hrQuestions from "../data/hrQuestions";
 
 export default function HRQuestions({ domain }) {
     const [openId, setOpenId] = useState(null);
+
+    useEffect(() => {
+        const domainLabel = domain ? `${domain.charAt(0).toUpperCase() + domain.slice(1)} ` : "";
+        document.title = `${domainLabel}Behavioral Interview Prep | PrepWise`;
+        
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute("content", `Master the HR round for ${domain || 'tech'} roles. Practice common behavioral questions using the STAR method with PrepWise.`);
+        }
+    }, [domain]);
 
     if (!domain) {
         return (
@@ -21,7 +32,11 @@ export default function HRQuestions({ domain }) {
     }
 
     return (
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto px-6 sm:px-10 py-8">
+            <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-indigo-600 transition-colors mb-8">
+                <FiArrowLeft /> Back to Dashboard
+            </Link>
+            
             {/* --- Header Section --- */}
             <header className="mb-12">
                 <div className="flex items-center gap-4 mb-4">
@@ -89,17 +104,6 @@ export default function HRQuestions({ domain }) {
                                             <p className="text-gray-600 leading-relaxed font-medium mb-6 italic">
                                                 "{q.answer}"
                                             </p>
-
-                                            {/* Pro Tip Box */}
-                                            <div className="bg-white p-4 rounded-xl border border-rose-100 flex gap-3">
-                                                <div className="text-rose-500 shrink-0 mt-1">
-                                                    <FiInfo />
-                                                </div>
-                                                <p className="text-xs text-gray-500 leading-relaxed">
-                                                    <strong className="text-gray-900 block mb-1">Interviewer's Perspective:</strong>
-                                                    They are looking for how you handle conflict and your ability to reflect on past experiences. Be specific!
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
                                 </motion.div>

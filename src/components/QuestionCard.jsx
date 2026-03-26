@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiChevronDown, FiBookmark, FiCheckCircle, FiClock, FiLayers } from "react-icons/fi";
+import { FiChevronDown, FiBookmark, FiClock, FiLayers } from "react-icons/fi";
 
 export default function QuestionCard({ question, answer, level }) {
     const [open, setOpen] = useState(false);
     const [bookmarked, setBookmarked] = useState(false);
-    const [mastered, setMastered] = useState(false);
 
     const config = {
         Easy: { color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
@@ -84,20 +83,6 @@ export default function QuestionCard({ question, answer, level }) {
                                 <p className="text-gray-600 leading-relaxed font-medium">
                                     {answer}
                                 </p>
-                                
-                                {/* Mastery Toggle */}
-                                <div className="mt-8 flex items-center justify-between pt-6 border-t border-gray-100">
-                                    <p className="text-xs text-gray-400 font-bold italic">Did you find this helpful?</p>
-                                    <button 
-                                        onClick={() => setMastered(!mastered)}
-                                        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all ${
-                                            mastered ? "bg-emerald-500 text-white" : "bg-white border border-gray-200 text-gray-500 hover:border-emerald-500 hover:text-emerald-500"
-                                        }`}
-                                    >
-                                        <FiCheckCircle />
-                                        {mastered ? "Mastered" : "Mark as Mastered"}
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </motion.div>

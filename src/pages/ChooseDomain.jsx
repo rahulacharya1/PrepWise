@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiArrowRight } from "react-icons/fi";
@@ -25,6 +25,15 @@ const domains = [
 export default function ChooseDomain({ setDomain }) {
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
+
+    useEffect(() => {
+        document.title = "Choose Your Tech Stack | PrepWise Interview Path";
+        
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute("content", "Select your technology domain to begin. From Frontend and React to Python and Cloud—get specialized interview questions and roadmaps tailored to your focus.");
+        }
+    }, []);
 
     const filteredDomains = domains.filter(d => 
         d.name.toLowerCase().includes(search.toLowerCase())
@@ -126,3 +135,4 @@ export default function ChooseDomain({ setDomain }) {
         </div>
     );
 }
+

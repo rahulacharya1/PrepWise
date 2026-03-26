@@ -1,12 +1,24 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCode, FiCopy, FiCheck, FiExternalLink, FiTerminal } from "react-icons/fi";
+import { FiCode, FiCopy, FiCheck, FiExternalLink, FiTerminal, FiArrowLeft } from "react-icons/fi";
 import codingQuestions from "../data/codingQuestions";
 
 export default function CodingQuestions({ domain }) {
     const [openId, setOpenId] = useState(null);
     const [copiedId, setCopiedId] = useState(null);
+
+    useEffect(() => {
+        if (domain) {
+            const formattedDomain = domain.charAt(0).toUpperCase() + domain.slice(1);
+            document.title = `${formattedDomain} Coding Challenges | PrepWise Lab`;
+            
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.setAttribute("content", `Solve hand-picked ${formattedDomain} coding challenges on PrepWise. Practice with optimized solutions and industry-standard logic.`);
+            }
+        }
+    }, [domain]);
 
     if (!domain) return <Navigate to="/dashboard" replace />;
 
@@ -19,7 +31,11 @@ export default function CodingQuestions({ domain }) {
     };
 
     return (
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 py-8">
+            <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-indigo-600 transition-colors mb-8">
+                <FiArrowLeft /> Back to Dashboard
+            </Link>
+
             {/* --- Header Section --- */}
             <header className="mb-12">
                 <div className="flex items-center gap-3 mb-4">
@@ -104,19 +120,6 @@ export default function CodingQuestions({ domain }) {
                                                 <pre className="p-6 text-sm sm:text-base overflow-x-auto font-mono leading-relaxed text-indigo-300 custom-scrollbar">
                                                     <code>{q.answer}</code>
                                                 </pre>
-                                            </div>
-
-                                            {/* External Resources / Tip */}
-                                            <div className="mt-6 p-4 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-indigo-600 shadow-sm">
-                                                        <FiExternalLink />
-                                                    </div>
-                                                    <p className="text-xs font-bold text-indigo-900">Need more practice on this pattern?</p>
-                                                </div>
-                                                <button className="text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:underline">
-                                                    View Docs
-                                                </button>
                                             </div>
                                         </div>
                                     </motion.div>

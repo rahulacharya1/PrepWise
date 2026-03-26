@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUserTie, FaLaptopCode, FaCode, FaExchangeAlt, FaArrowRight, FaRocket } from "react-icons/fa";
@@ -5,10 +6,23 @@ import { FaUserTie, FaLaptopCode, FaCode, FaExchangeAlt, FaArrowRight, FaRocket 
 export default function Dashboard({ domain, setDomain }) {
     const navigate = useNavigate();
 
-    // Empty State (No Domain Selected)
+    useEffect(() => {
+        // Dynamically set title based on whether a domain is picked
+        const pageTitle = domain 
+            ? `${domain.charAt(0).toUpperCase() + domain.slice(1)} Dashboard | PrepWise` 
+            : "Setup Your Path | PrepWise";
+            
+        document.title = pageTitle;
+        
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute("content", "Access your curated interview roadmap. Practice behavioral questions, master technical core concepts, and solve coding challenges tailored to your career domain.");
+        }
+    }, [domain]);
+
     if (!domain) {
         return (
-            <div className="flex items-center justify-center min-h-[80vh] px-4">
+            <div className="flex items-center justify-center min-h-[90vh] px-4">
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -38,7 +52,7 @@ export default function Dashboard({ domain, setDomain }) {
         <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-7xl mx-auto px-4 py-8"
+            className="max-w-7xl mx-auto px-4 py-20"
         >
             {/* --- Header Section --- */}
             <header className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-6">
@@ -67,13 +81,6 @@ export default function Dashboard({ domain, setDomain }) {
                     Switch Domain
                 </button>
             </header>
-
-            {/* --- Stats Summary (Next Level Addition) --- */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <StatBox label="Questions Completed" value="42" total="150" color="indigo" />
-                <StatBox label="Mock Interviews" value="03" total="10" color="emerald" />
-                <StatBox label="Daily Streak" value="05 Days" color="amber" />
-            </div>
 
             {/* --- Action Cards --- */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -106,7 +113,7 @@ export default function Dashboard({ domain, setDomain }) {
     );
 }
 
-/* Enhanced Dashboard Card */
+
 function DashboardCard({ title, subtitle, desc, icon: Icon, color, onClick }) {
     const theme = {
         indigo: "text-indigo-600 bg-indigo-50 border-indigo-100",
@@ -136,26 +143,3 @@ function DashboardCard({ title, subtitle, desc, icon: Icon, color, onClick }) {
     );
 }
 
-/* New StatBox Component for visual density */
-function StatBox({ label, value, total, color }) {
-    const colors = {
-        indigo: "bg-indigo-600",
-        emerald: "bg-emerald-500",
-        amber: "bg-amber-500"
-    };
-
-    return (
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">{label}</p>
-            <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-black text-gray-900">{value}</span>
-                {total && <span className="text-sm font-bold text-gray-400">/ {total}</span>}
-            </div>
-            {total && (
-                <div className="w-full h-1.5 bg-gray-100 rounded-full mt-4">
-                    <div className={`h-full ${colors[color]} rounded-full`} style={{ width: '30%' }} />
-                </div>
-            )}
-        </div>
-    );
-}

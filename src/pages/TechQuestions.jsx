@@ -1,18 +1,34 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiBookOpen, FiChevronDown, FiInfo, FiCheckCircle } from "react-icons/fi";
+import { FiBookOpen, FiChevronDown, FiInfo, FiCheckCircle, FiArrowLeft } from "react-icons/fi";
 import technicalQuestions from "../data/technicalQuestions";
 
 export default function TechQuestions({ domain }) {
     const [openId, setOpenId] = useState(null);
+
+    useEffect(() => {
+        if (domain) {
+            const formattedDomain = domain.charAt(0).toUpperCase() + domain.slice(1);
+            document.title = `${formattedDomain} Technical Interview Concepts | PrepWise Foundation`;
+            
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.setAttribute("content", `Master the architectural and theoretical core of ${formattedDomain}. Explore expert explanations on key technical concepts with PrepWise.`);
+            }
+        }
+    }, [domain]);
 
     if (!domain) return <Navigate to="/dashboard" replace />;
 
     const filtered = technicalQuestions.filter(q => q.domain === domain);
 
     return (
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto px-6 sm:px-10 py-8">
+            <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-indigo-600 transition-colors mb-8">
+                <FiArrowLeft /> Back to Dashboard
+            </Link>
+
             {/* --- Header Section --- */}
             <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
@@ -30,17 +46,6 @@ export default function TechQuestions({ domain }) {
                     <p className="text-gray-500 font-medium">
                         Master the theoretical core and architectural patterns.
                     </p>
-                </div>
-
-                {/* Quick Progress Stats */}
-                <div className="bg-white border border-gray-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm">
-                    <div className="text-right">
-                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Available</p>
-                        <p className="text-xl font-black text-indigo-600">{filtered.length} Questions</p>
-                    </div>
-                    <div className="w-12 h-12 rounded-full border-4 border-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs">
-                        {filtered.length > 0 ? "0%" : "-"}
-                    </div>
                 </div>
             </header>
 
@@ -102,15 +107,6 @@ export default function TechQuestions({ domain }) {
                                                 <p className="text-gray-700 leading-relaxed font-medium">
                                                     {q.answer}
                                                 </p>
-                                                
-                                                {/* Interviewer Tip */}
-                                                <div className="mt-8 flex items-start gap-3 p-4 bg-white rounded-2xl border border-indigo-100 shadow-sm">
-                                                    <FiInfo className="text-indigo-500 mt-1 shrink-0" />
-                                                    <p className="text-xs text-slate-500 leading-relaxed">
-                                                        <span className="font-black text-slate-900 uppercase tracking-tighter mr-1">Key Takeaway:</span> 
-                                                        Focus on mentioning how this affects performance and scalability in real-world applications.
-                                                    </p>
-                                                </div>
                                             </div>
                                         </div>
                                     </motion.div>
